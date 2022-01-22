@@ -30,7 +30,7 @@ public class BoardService {
 
     public List<BoardDto> getList() {
 
-        return boardRepository.findAll().stream().map(board -> board.toDto())
+        return boardRepository.findAllOrderByCreatedAt().stream().map(board -> board.toDto())
                 .collect(Collectors.toList());
     }
 
