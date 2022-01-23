@@ -1,6 +1,7 @@
 package com.basic.board.domain.entity;
 
-import com.basic.board.web.dto.BoardDto;
+import com.basic.board.web.dto.BoardReqDto;
+import com.basic.board.web.dto.BoardResDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,11 +43,20 @@ public class Board extends TimeEntity{
         this.content = content;
     }
 
-    public BoardDto toDto(){
-        return BoardDto.builder()
+    public BoardReqDto toReqDto(){
+        return BoardReqDto.builder()
                 .content(this.content)
                 .title(this.title)
                 .username(this.username)
+                .build();
+    }
+
+    public BoardResDto toResDto(){
+        return BoardResDto.builder()
+                .content(this.content)
+                .title(this.title)
+                .username(this.username)
+                .createdAt(this.createdAt)
                 .build();
     }
 

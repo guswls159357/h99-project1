@@ -3,9 +3,9 @@ package com.basic.board.domain.service;
 import com.basic.board.domain.entity.Board;
 import com.basic.board.domain.repository.BoardRepository;
 import com.basic.board.handler.ex.NotExistException;
-import com.basic.board.web.dto.BoardDto;
+import com.basic.board.web.dto.BoardReqDto;
+import com.basic.board.web.dto.BoardResDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,32 +15,31 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-@Slf4j
 public class BoardService {
 
     private final BoardRepository boardRepository;
 
     @Transactional
-    public BoardDto create(BoardDto dto) {
+    public BoardResDto create(BoardReqDto dto) {
 
         Board createdBoard = dto.toEntity();
 
-        return boardRepository.save(createdBoard).toDto();
+        return boardRepository.save(createdBoard).toResDto();
     }
 
-    public List<BoardDto> getList() {
+    public List<BoardResDto> getList() {
 
-        return boardRepository.findAllOrderByCreatedAt().stream().map(board -> board.toDto())
+        return boardRepository.findAllOrderByCreatedAt().stream().map(board -> board.toResDto())
                 .collect(Collectors.toList());
     }
 
-    public BoardDto getOne(Integer boardId) {
+    public BoardResDto getOne(Integer boardId) {
 
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->{
                     throw new NotExistException("boardId","존재하지 않습니다.");
                 });
 
-        return board.toDto();
+        return board.toResDto();
     }
 }

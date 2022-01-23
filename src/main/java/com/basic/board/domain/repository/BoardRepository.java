@@ -13,4 +13,5 @@ public interface BoardRepository extends JpaRepository<Board,Integer> {
     @Query(value = "SELECT * FROM board order by board.created_at desc;",
             nativeQuery = true)
     List<Board> findAllOrderByCreatedAt();
+
 }

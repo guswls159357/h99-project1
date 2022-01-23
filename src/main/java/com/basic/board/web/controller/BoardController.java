@@ -12,7 +12,7 @@ public class BoardController {
     @GetMapping({"/", "/board"})
     public String mainForm() {
 
-        return "board";
+        return "/board.html";
     }
 
     @GetMapping("/board/{id}")
