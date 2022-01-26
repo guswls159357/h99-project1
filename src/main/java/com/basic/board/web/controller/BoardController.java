@@ -15,17 +15,4 @@ public class BoardController {
         return "/board.html";
     }
 
-    @GetMapping("/board/{id}")
-    public String detailForm(@PathVariable("id") Integer id, Model model){
-
-        model.addAttribute("id",id);
-        return "detail";
-    }
-
-    @GetMapping("/board-post")
-    public String postForm(){
-
-        return "post";
-    }
-
 }

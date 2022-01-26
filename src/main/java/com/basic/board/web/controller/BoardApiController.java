@@ -7,6 +7,7 @@ import com.basic.board.web.dto.ResDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,10 +40,9 @@ public class BoardApiController {
     }
 
     @PostMapping
-    public ResDto create(@RequestBody @Valid BoardReqDto dto,
+    public ResDto create(@RequestBody @Validated BoardReqDto dto,
                          BindingResult bindingResult) throws MethodArgumentNotValidException {
 
-        log.info(dto.toString());
         if (bindingResult.hasErrors()) {
             throw new MethodArgumentNotValidException(null,bindingResult);
         } else {

@@ -53,6 +53,7 @@ public class Board extends TimeEntity{
 
     public BoardResDto toResDto(){
         return BoardResDto.builder()
+                .id(this.id)
                 .content(this.content)
                 .title(this.title)
                 .username(this.username)

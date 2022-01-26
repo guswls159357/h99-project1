@@ -6,6 +6,7 @@ import com.basic.board.handler.ex.NotExistException;
 import com.basic.board.web.dto.BoardReqDto;
 import com.basic.board.web.dto.BoardResDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

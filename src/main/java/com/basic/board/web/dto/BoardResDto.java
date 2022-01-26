@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @ToString
 public class BoardResDto {
 
+    private Integer id;
+
     private String title;
 
     private String content;
@@ -22,12 +24,4 @@ public class BoardResDto {
 
     private String username;
 
-    public Board toEntity() {
-
-        return Board.builder()
-                .content(this.content)
-                .username(this.username)
-                .title(this.title)
-                .build();
-    }
 }
