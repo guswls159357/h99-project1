@@ -4,6 +4,9 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta property="og:title" content="간단한 게시판"/>
+    <meta property="og:image" content="https://cdn.pixabay.com/photo/2014/04/02/10/13/sticky-note-303143__340.png"/>
+    <meta property="og:description" content="간단한 게시판 입니다">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -40,8 +43,13 @@
             border-radius: 5px;
         }
 
+        .card-detail{
+            width: 550px;
+            margin: 2% auto 2% auto;
+            display: block;
+        }
+
     </style>
-    <script src="../../../../../../spring/photogram/gradle/photogram/src/main/resources/static/js/profile.js"></script>
 </head>
 
 <body>
@@ -55,6 +63,7 @@
         </p>
     </div>
 </header>
+
 <div id="post-box" class="form-post" style="display:none">
     <div>
         <div class="form-group">
@@ -101,9 +110,10 @@
             success: function (response) { // 성공하면
                 let data = response['data']
                 for (let i = 0; i < data.length; i++) {
+                    let id = data[i]['id']
                     let title = data[i]['title']
                     let username = data[i]['username']
-                    let time = data[i]['created_at'].replace('T',' ')
+                    let time = data[i]['created_at'].replace('T', ' ')
 
 
                     let temp_html = `<div class="card">
@@ -111,14 +121,48 @@
                                             <h5 class="card-title">제목: ${title}</h5>
                                             <p class="card-username">작성자: ${username}</p>
                                             <p class="card-time">작성 시간: ${time}</p>
-                                            <a href="#" class="btn btn-primary btn-detail">상세 보기</a>
+                                            <button onclick="detail_open(${id})" class="btn btn-primary btn-detail" id="btn-detail-${id}">상세 보기</a>
                                         </div>
-                                     </div>`
+                                     </div>
+                                     <div id="card-detail-${id}"></div>`
                     $('#card-list').append(temp_html)
                 }
 
             }
         })
+    }
+
+    function detail_open(id) {
+        $(`#btn-detail-${id}`).attr('disabled',true)
+        $.ajax({
+            type: "GET",
+            url: `/api/board/${id}`,
+
+            success: function (response) { // 성공하면
+                let data = response['data']
+                let title = data['title']
+                let username = data['username']
+                let content = data['content']
+                let created_at = data['created_at'].replace('T', ' ')
+
+                let temp_html = `<div class="card border-dark mb-3 card-detail">
+                                    <div class="card-title" style="font-size: 30px">제목: ${title}</div>
+                                        <div class="card-body text-dark">
+                                            <h5 class="card-username" style="font-size: 25px">작성자: ${username}</h5>
+                                            <h5 class="card-time" style="font-size: 20px">생성시간: ${created_at}</h5>
+                                            <p class="card-text" style="font-size: 20px">내용: ${content}</p>
+                                            <a onclick="detail_close(${id})" class="btn btn-primary btn-detail">닫기</a>
+                                        </div>
+                                    </div>`
+                $(`#card-detail-${id}`).append(temp_html)
+            }
+
+        })
+    }
+
+    function detail_close(id){
+        $(`#btn-detail-${id}`).attr('disabled',false)
+        $(`#card-detail-${id}`).empty()
     }
 
     function post() {
@@ -141,15 +185,13 @@
                     let errors = data['errors']
                     let error_msg = ""
                     for (let i = 0; i < errors.length; i++) {
-                        error_msg += errors[i] + "\n"
+                        error_msg += errors[i]['reason'].toString() + "\n"
                     }
                     alert(error_msg)
                 } else {
                     alert(response['message'])
                 }
-                $(document).ready(function () {
-                    get_all();
-                });
+                window.location.reload();
             }
         })
     }
