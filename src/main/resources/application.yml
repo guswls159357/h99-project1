@@ -1,10 +1,6 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/basic?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    username: root
-    password: secret
-
+  profiles:
+    include: aws
   jpa:
     hibernate:
       ddl-auto: create # none, update, validate
