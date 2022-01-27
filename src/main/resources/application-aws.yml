@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://springboot-database.ckoubkb6oinl.ap-northeast-2.rds.amazonaws.com/board?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    username: admin
-    password: skduf564ds!
