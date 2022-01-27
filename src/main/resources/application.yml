@@ -2,6 +2,7 @@ spring:
   profiles:
     include: aws
   jpa:
+    database: mysql
     hibernate:
       ddl-auto: create # none, update, validate
     properties:
@@ -13,4 +14,4 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
-  org.apache.coyote.http11: debug
+#  org.apache.coyote.http11: debug
